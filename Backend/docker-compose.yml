@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql-server-container
+    environment:
+      SA_PASSWORD: $DB_PASSWORD
+      ACCEPT_EULA: Y
+    ports:
+      - 1433:1433
+    volumes:
+      - ./data:/var/opt/mssql
+    networks:
+      - db-network
+
+  adminer:
+    image: adminer
+    container_name: adminer-container
+    ports:
+      - 8080:8080
+    networks:
+      - db-network
+
+networks:
+  db-network:
